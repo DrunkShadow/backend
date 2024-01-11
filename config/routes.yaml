@@ -1,10 +1,14 @@
+# /path
+
 controllers:
     resource:
         path: ../src/Controller/
         namespace: App\Controller
     type: attribute
-    
-app.swagger_ui:
-    path: /api/doc
+
+
+app_project:
+    path: /project
+    controller: App\Controller\ProjectController::Get
     methods: GET
-    defaults: { _controller: nelmio_api_doc.controller.swagger_ui }
+

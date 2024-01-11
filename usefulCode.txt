@@ -1,0 +1,19 @@
+// function POST(EntityManagerInterface $entityManager): Response
+// {
+//     $project = new Project();
+
+//     $project->setId(1);
+//     $project->setCategory('Economy');
+//     $project->setName('Projecta1');
+//     $project->setBudget(1000.020);
+//     $date = new \DateTime('now', new \DateTimeZone('UTC'));
+
+//     $project->setDate($date);
+
+//     $entityManager->persist($project);
+
+//     $entityManager->flush();
+
+//     return new Response('Saved new project with id '.$project->getId());
+        
+// }
