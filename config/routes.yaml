@@ -8,7 +8,17 @@ controllers:
 
 
 app_project:
-    path: /project
-    controller: App\Controller\ProjectController::Get
+    path: /api/doc/projects
+    controller: App\Controller\ProjectController::GetProjects
     methods: GET
 
+app_workers:
+    path: /api/doc/workers
+    controller: App\Controller\WorkerController::GetWorkers
+    methods: GET
+
+
+app_keywords:
+    path: /api/doc/keywords
+    controller: App\Controller\KeywordsController::GetKeywords
+    methods: GET

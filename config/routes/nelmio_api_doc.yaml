@@ -10,3 +10,20 @@ app.swagger_ui:
     path: /api/doc
     methods: GET
     defaults: { _controller: nelmio_api_doc.controller.swagger_ui }
+
+
+app_project:
+    path: /api/doc/projects
+    controller: App\Controller\ProjectController::GetProjects
+    methods: GET
+
+app_workers:
+    path: /api/doc/workers
+    controller: App\Controller\WorkerController::GetWorkers
+    methods: GET
+
+
+keywords:
+    path: /api/doc/keywords
+    controller: App\Controller\KeywordsController::GetKeywords
+    methods: GET
