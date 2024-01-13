@@ -1,29 +1,24 @@
 
-## THIS IS TO SHOW THE FETCHIG ROUTES INSIDE THE DOC INTERFACE
-
-app.swagger:
-    path: /api/doc.json
-    methods: GET
-    defaults: { _controller: nelmio_api_doc.controller.swagger },
-
-app.swagger_ui:
-    path: /api/doc
-    methods: GET
-    defaults: { _controller: nelmio_api_doc.controller.swagger_ui }
 
 
-app_project:
-    path: /api/doc/projects
+app_project_get_projects:
+    path: /projects
     controller: App\Controller\ProjectController::GetProjects
     methods: GET
+    
 
 app_workers:
-    path: /api/doc/workers
+    path: /workers
     controller: App\Controller\WorkerController::GetWorkers
     methods: GET
 
 
-keywords:
-    path: /api/doc/keywords
+app_keywords:
+    path: /keywords
     controller: App\Controller\KeywordsController::GetKeywords
+    methods: GET
+
+app_keywordsObjects:
+    path: /keywordsObjects
+    controller: App\Controller\KeywordsController::GetObjects
     methods: GET

@@ -14,13 +14,14 @@ class Worker
     private ?int $id = null;
 
     #[ORM\Column(length: 40)]
-    private ?string $Name = null;
+    private ?string $name = null;
 
     #[ORM\Column(length: 40)]
-    private ?string $LastName = null;
+    private ?string $lastName = null;
 
     #[ORM\Column(length: 40)]
-    private ?string $Title = null;
+    private ?string $title = null;
+
 
     public function getId(): ?int
     {
@@ -29,24 +30,24 @@ class Worker
 
     public function getName(): ?string
     {
-        return $this->Name;
+        return $this->name;
     }
 
     public function setName(string $Name): static
     {
-        $this->Name = $Name;
+        $this->name = $Name;
 
         return $this;
     }
 
     public function getLastName(): ?string
     {
-        return $this->LastName;
+        return $this->lastName;
     }
 
     public function setLastName(string $LastName): static
     {
-        $this->LastName = $LastName;
+        $this->lastName = $LastName;
 
         return $this;
     }
@@ -60,12 +61,12 @@ class Worker
 
     public function getTitle(): ?string
     {
-        return $this->Title;
+        return $this->title;
     }
 
     public function setTitle(string $Title): static
     {
-        $this->Title = $Title;
+        $this->title = $Title;
 
         return $this;
     }

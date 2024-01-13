@@ -16,6 +16,9 @@ class Keywords
     #[ORM\Column(length: 255)]
     private ?string $value = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $concernedObject = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -36,6 +39,18 @@ class Keywords
     public function setValue(string $value): static
     {
         $this->value = $value;
+
+        return $this;
+    }
+
+    public function getConcernedObject(): ?string
+    {
+        return $this->concernedObject;
+    }
+
+    public function setConcernedObject(string $concernedObject): static
+    {
+        $this->concernedObject = $concernedObject;
 
         return $this;
     }
