@@ -2,17 +2,16 @@
 
 namespace App\Controller;
 
-// src\Controller\ProjectController.php
-
 use App\Entity\Project;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
-use OpenApi\Annotations as OA;
+use Symfony\Component\Routing\Annotation\Route;
 
+#[Route('/projects', name: 'project_')]
 class ProjectController extends AbstractController
-{   
-
+{
+    #[Route('', name: 'list', methods: ['GET'])]
     public function GetProjects(EntityManagerInterface $entityManager): Response
     {
         $projects = $entityManager->getRepository(Project::class)->findAll();
@@ -22,5 +21,17 @@ class ProjectController extends AbstractController
         }
 
         return $this->json($projects);
+    }
+
+    #[Route('/{projectId}', name: 'getProjectById', methods: ['GET'],)]
+    public function GetProjectById(EntityManagerInterface $entityManager, string $projectId): Response
+    {
+        $project = $entityManager->getRepository(Project::class)->find($projectId);
+
+        if (!$project) {
+            return $this->json(['error' => 'No projects found'], 404);
+        }
+
+        return $this->json($project);
     }
 }

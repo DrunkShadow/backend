@@ -6,10 +6,11 @@ use App\Entity\Keywords;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Routing\Annotation\Route;
 
 class KeywordsController extends AbstractController
 {
+    #[Route('/keywords', name: 'getAllKeywords',methods:'GET')]
     public function GetKeywords(EntityManagerInterface $entityManager): Response
     {
         $keywords = $entityManager->getRepository(Keywords::class)->findAll();
@@ -22,6 +23,7 @@ class KeywordsController extends AbstractController
     }
 
     
+    #[Route('/keywordsObjects', name: 'getAllKeywordsObjects',methods:'GET')]
 
     public function GetObjects(EntityManagerInterface $entityManager): Response
     {
