@@ -10,12 +10,14 @@ use Doctrine\ORM\Mapping as ORM;
 class Models
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
     #[ORM\Column(length: 255)]
     private ?string $id = null;
 
     #[ORM\Column(type: Types::TEXT)]
     private ?string $text = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $diffusion = null;
 
     public function getId(): ?string
     {
@@ -37,6 +39,18 @@ class Models
     public function setText(string $Text): static
     {
         $this->text = $Text;
+
+        return $this;
+    }
+
+    public function getDiffusion(): ?string
+    {
+        return $this->diffusion;
+    }
+
+    public function setDiffusion(string $Diffusion): static
+    {
+        $this->diffusion = $Diffusion;
 
         return $this;
     }

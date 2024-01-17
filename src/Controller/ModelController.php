@@ -9,6 +9,7 @@ use Nelmio\ApiDocBundle\Annotation\Model;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Serializer\SerializerInterface;
 
 #[Route('/models', name: 'Models')]
 class ModelController extends AbstractController
@@ -52,5 +53,19 @@ class ModelController extends AbstractController
     
         return $this->json(['message' => 'Model updated successfully']);
     }
+
+    #[Route('/{text}/{id}/{diffusion}', name: 'createModel', methods: ['POST'])]
+    public function createModel(EntityManagerInterface $entityManager, string $id, string $text, string $diffusion): Response
+    {
+    $newModel = new Models();
+    $newModel->setId($id);
+    $newModel->setText($text);
+    $newModel->setDiffusion($diffusion);
+
+    $entityManager->persist($newModel);
+    $entityManager->flush();
+
+    return $this->json(['message' => 'Model created successfully']);
+}
 
 }
