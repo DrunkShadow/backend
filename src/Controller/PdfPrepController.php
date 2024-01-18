@@ -67,6 +67,8 @@ class PdfPrepController extends AbstractController
                 '{{worker_name}}' => $entity->getName(),
                 '{{worker_last_name}}' => $entity->getLastName(),
                 '{{worker_title}}' => $entity->getTitle(),
+                '{{worker_signature}}' => '<img src="data:image/jpeg;base64,' . $entity->getSignature() . '" />',
+
             ];
         }
 
