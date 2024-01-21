@@ -19,6 +19,12 @@ class Models
     #[ORM\Column(length: 255)]
     private ?string $diffusion = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $concernsProject = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?bool $concernsWorker = null;
+
     public function getId(): ?string
     {
         return $this->id;
@@ -51,6 +57,30 @@ class Models
     public function setDiffusion(string $Diffusion): static
     {
         $this->diffusion = $Diffusion;
+
+        return $this;
+    }
+
+    public function isConcernsProject(): ?bool
+    {
+        return $this->concernsProject;
+    }
+
+    public function setConcernsProject(?bool $concernsProject): static
+    {
+        $this->concernsProject = $concernsProject;
+
+        return $this;
+    }
+
+    public function isConcernsWorker(): ?bool
+    {
+        return $this->concernsWorker;
+    }
+
+    public function setConcernsWorker(?bool $concernsWorker): static
+    {
+        $this->concernsWorker = $concernsWorker;
 
         return $this;
     }

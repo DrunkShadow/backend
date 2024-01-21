@@ -47,7 +47,7 @@
  *   @Input() ImportedId: string = '';
 
   keywordsArray: any[] = [];
-  keyObjectsArray: any[] = [];
+  // keyObjectsArray: any[] = [];
   reportText: string = '';
   convertedReportText: string = '';
   chosenProject: Project = {} as Project;
@@ -160,3 +160,6 @@
   }
 
  */
+             {# <select [(ngModel)]="selectObjects" multiple >
+                    <option *ngFor="let obj of keyObjectsArray" (click)="onChosen(obj.concernedObject)">{{obj.concernedObject}}</option>
+            </select> #}

@@ -54,13 +54,15 @@ class ModelController extends AbstractController
         return $this->json(['message' => 'Model updated successfully']);
     }
 
-    #[Route('/{text}/{id}/{diffusion}', name: 'createModel', methods: ['POST'])]
-    public function createModel(EntityManagerInterface $entityManager, string $id, string $text, string $diffusion): Response
+    #[Route('/{id}/{text}/{diffusion}/{isproj}/{isworker}', name: 'createModel', methods: ['POST'])]
+    public function createModel(EntityManagerInterface $entityManager, string $id, string $text, string $diffusion,int $isproj,int $isworker): Response
     {
     $newModel = new Models();
     $newModel->setId($id);
     $newModel->setText($text);
     $newModel->setDiffusion($diffusion);
+    $newModel->setConcernsProject($isproj);
+    $newModel->setConcernsWorker($isworker);
 
     $entityManager->persist($newModel);
     $entityManager->flush();
