@@ -54,20 +54,55 @@ class ModelController extends AbstractController
         return $this->json(['message' => 'Model updated successfully']);
     }
 
-    #[Route('/{id}/{text}/{diffusion}/{isproj}/{isworker}', name: 'createModel', methods: ['POST'])]
-    public function createModel(EntityManagerInterface $entityManager, string $id, string $text, string $diffusion,int $isproj,int $isworker): Response
+
+    
+
+    #[Route('/{modelId}', name: 'DeleteModel', methods: ['DELETE'],)]
+    public function DeleteModel(EntityManagerInterface $entityManager, Request $request, string $modelId): Response
     {
-    $newModel = new Models();
-    $newModel->setId($id);
-    $newModel->setText($text);
-    $newModel->setDiffusion($diffusion);
-    $newModel->setConcernsProject($isproj);
-    $newModel->setConcernsWorker($isworker);
+        $model = $entityManager->getRepository(Models::class)->find($modelId);
 
-    $entityManager->persist($newModel);
-    $entityManager->flush();
+        if (!$model) {
+            return $this->json(['error' => 'Model not found'], 404);
+        }
+    
+        $entityManager->remove($model);
+        $entityManager->flush();
+    
+        return $this->json(['message' => 'Model deleted successfully']);
+    }
 
-    return $this->json(['message' => 'Model created successfully']);
-}
+    #[Route('', name: 'createModel', methods: ['POST'],format: 'json')]
+    public function createModel(EntityManagerInterface $entityManager, Request $request): Response
+    {
+        $newModel = new Models();
+        $data = json_decode($request->getContent(), true);
+        $newModel->setId($data['id']);
+        $newModel->setText($data['text']);
+        $newModel->setConcernsProject($data['concernsProject']);
+        $newModel->setConcernsWorker($data['concernsWorker']);
+        $entityManager->persist($newModel);
+        $entityManager->flush();
+    
+        return $this->json(['message' => 'Model updated successfully']);
+    }
+
+
+
+    // #[Route('/{id}/{text}/{isproj}/{isworker}', name: 'createModel', methods: ['POST'])]
+    // public function createModel(EntityManagerInterface $entityManager, string $id, string $text,int $isproj,int $isworker): Response
+    // {
+    // $newModel = new Models();
+    // $newModel->setId($id);
+    // $newModel->setText($text);
+    // $newModel->setConcernsProject($isproj);
+    // $newModel->setConcernsWorker($isworker);
+
+    // $entityManager->persist($newModel);
+    // $entityManager->flush();
+
+    // return $this->json(['message' => 'Model created successfully']);
+    // }
+    // ADDITION WITH A LINK CHECK MODEL-CREATOR
 
 }

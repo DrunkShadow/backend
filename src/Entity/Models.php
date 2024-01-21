@@ -16,9 +16,6 @@ class Models
     #[ORM\Column(type: Types::TEXT)]
     private ?string $text = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $diffusion = null;
-
     #[ORM\Column(nullable: true)]
     private ?bool $concernsProject = null;
 
@@ -45,18 +42,6 @@ class Models
     public function setText(string $Text): static
     {
         $this->text = $Text;
-
-        return $this;
-    }
-
-    public function getDiffusion(): ?string
-    {
-        return $this->diffusion;
-    }
-
-    public function setDiffusion(string $Diffusion): static
-    {
-        $this->diffusion = $Diffusion;
 
         return $this;
     }
