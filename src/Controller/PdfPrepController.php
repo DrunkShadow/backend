@@ -25,8 +25,9 @@ class PdfPrepController extends AbstractController
         $pdf = new TCPDF();
         $pdf->AddPage();
 
-        $html = '<h1>' . $model->getId() . '</h1> <br> <p>'
-            . $this->replaceKeywords($entityManager, $model->getText(), $id) . '<p>';
+        $html = '<h1>' . $model->getId() . '</h1> <br> <p style="white-space: pre-wrap;">'
+        . $this->replaceKeywords($entityManager, $model->getText(), $id) . '</p>';
+    
 
         $pdf->writeHTML($html, true, false, true, false, '');
 
