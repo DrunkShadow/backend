@@ -56,19 +56,19 @@ class PdfPrepController extends AbstractController
     {
         if ($entity instanceof Project) {
             return [
-                '{{project_id}}' => $entity->getId(),
-                '{{project_name}}' => $entity->getName(),
-                '{{project_budget}}' => $entity->getBudget(),
-                '{{project_date}}' => $entity->getDate()->format('d-m-Y'),
-                '{{project_category}}' => $entity->getCategory(),
+                '{{ project_id }}' => $entity->getId(),
+                '{{ project_name }}' => $entity->getName(),
+                '{{ project_budget }}' => $entity->getBudget(),
+                '{{ project_date }}' => $entity->getDate()->format('d-m-Y'),
+                '{{ project_category }}' => $entity->getCategory(),
             ];
         } elseif ($entity instanceof Worker) {
             return [
-                '{{worker_id}}' => $entity->getId(),
-                '{{worker_name}}' => $entity->getName(),
-                '{{worker_last_name}}' => $entity->getLastName(),
-                '{{worker_title}}' => $entity->getTitle(),
-                '{{worker_signature}}' => '<img src="data:image/jpeg;base64,' . $entity->getSignature() . '" />',
+                '{{ worker_id }}' => $entity->getId(),
+                '{{ worker_name }}' => $entity->getName(),
+                '{{ worker_last_name }}' => $entity->getLastName(),
+                '{{ worker_title }}' => $entity->getTitle(),
+                '{{ worker_signature }}' => '<img src="data:image/jpeg;base64,' . $entity->getSignature() . '" />',
 
             ];
         }
