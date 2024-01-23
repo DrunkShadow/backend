@@ -9,7 +9,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManagerInterface;
 use TCPDF;
+use OpenApi\Attributes as OA;
 
+#[OA\Tag(name: 'services')]
 #[Route('/services', name: 'download', methods: 'GET')]
 class PdfPrepController extends AbstractController
 {
@@ -25,9 +27,9 @@ class PdfPrepController extends AbstractController
         $pdf = new TCPDF();
         $pdf->AddPage();
 
-        $html = '<h1>' . $model->getId() . '</h1> <br> <p style="white-space: pre-wrap;">'
-        . $this->replaceKeywords($entityManager, $model->getText(), $id) . '</p>';
-    
+        $html = '<h1>' . str_replace(' ', '&nbsp;', $model->getId()) . '</h1> <br> <p>'
+        . nl2br($this->replaceKeywords($entityManager, $model->getText(), $id)) . '</p>';
+
 
         $pdf->writeHTML($html, true, false, true, false, '');
 
@@ -68,7 +70,7 @@ class PdfPrepController extends AbstractController
                 '{{ worker_name }}' => $entity->getName(),
                 '{{ worker_last_name }}' => $entity->getLastName(),
                 '{{ worker_title }}' => $entity->getTitle(),
-                '{{ worker_signature }}' => '<img src="data:image/jpeg;base64,' . $entity->getSignature() . '" />',
+                '{{ worker_signature }}' => '<img src="data:image/jpeg;base64,' . $entity->getSignature() . '" style="width: 200px; height: auto;"/>',
 
             ];
         }

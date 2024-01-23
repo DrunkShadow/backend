@@ -19,6 +19,9 @@ class Keywords
     #[ORM\Column(length: 255)]
     private ?string $concernedObject = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $method = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -51,6 +54,18 @@ class Keywords
     public function setConcernedObject(string $concernedObject): static
     {
         $this->concernedObject = $concernedObject;
+
+        return $this;
+    }
+
+    public function getMethod(): ?string
+    {
+        return $this->method;
+    }
+
+    public function setMethod(string $method): static
+    {
+        $this->method = $method;
 
         return $this;
     }
