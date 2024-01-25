@@ -1,6 +1,7 @@
 <?php
 namespace App\Controller;
 
+use App\Entity\Keywords;
 use App\Entity\Project;
 use App\Entity\Worker;
 use App\Entity\Models;
@@ -8,12 +9,16 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManagerInterface;
-use TCPDF;
 use OpenApi\Attributes as OA;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
+
+use TCPDF;
+
 
 #[OA\Tag(name: 'services')]
-#[Route('/services', name: 'download', methods: 'GET')]
-class PdfPrepController extends AbstractController
+#[Route('/services', name: 'serving', methods: 'GET')]
+class OutputsController extends AbstractController
 {
     #[Route('/downloadPDF/{modelId}/{id}', name: 'download', methods: ['GET'])]
     public function generatePdf(EntityManagerInterface $entityManager, string $modelId, string $id): Response
@@ -41,6 +46,22 @@ class PdfPrepController extends AbstractController
 
         return $response;
     }
+
+
+    // private function replaceKeywords(EntityManagerInterface $entityManager, string $text, int $id): string
+    // {   
+    // $keys = $entityManager->getRepository(Keywords::class)->findAll();
+    // foreach ($keys as $key) {
+    //     if ($key->getConcernedObject() === 'project') {
+    //         $entity = $entityManager->getRepository(Project::class)->find($id);
+    //         $method = $entity->{$key->getMethod()};
+
+    //         $text = str_replace($key->getValue(), $method ,$text);
+    //     }
+    // }
+
+    // return $text;
+    // }
 
     private function replaceKeywords(EntityManagerInterface $entityManager, string $text, int $id): string
     {
@@ -77,4 +98,29 @@ class PdfPrepController extends AbstractController
 
         return [];
     }
+
+    #[Route('/sendEmail', name: 'server', methods: 'GET')]
+    public function sendEmail(MailerInterface $mailer): Response
+    {
+    
+    $subject = 'Your Email Subject'; 
+    $email = (new Email())
+        ->from('SoftSquare@test.com')
+        ->to('chaabenranim8@gmail.com')
+        ->subject($subject)
+        ->text('Sending emails is fun again!')
+        ->html('<p>See Twig integration for better HTML integration!</p>');
+
+    try {
+        $mailer->send($email);
+        return new Response('Email sent successfully');
+        } catch (\Exception $e) {
+            return  new Response('Email was not sent');
+    }
 }
+
+}
+
+
+
+        
