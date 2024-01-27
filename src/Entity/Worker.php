@@ -12,95 +12,95 @@ class Worker
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id = null;
+    private ?int $workerId = null;
 
     #[ORM\Column(length: 40)]
-    private ?string $name = null;
+    private ?string $workerName = null;
 
     #[ORM\Column(length: 40)]
-    private ?string $lastName = null;
+    private ?string $workerLastName = null;
 
     #[ORM\Column(length: 40)]
-    private ?string $title = null;
+    private ?string $workerTitle = null;
 
     #[ORM\Column(type: Types::BLOB)]
-    private $signature = null;
+    private $workerSignature = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $Email = null;
+    private ?string $workerEmail = null;
 
 
-    public function getId(): ?int
+    public function getWorkerId(): ?int
     {
-        return $this->id;
+        return $this->workerId;
     }
 
-    public function getName(): ?string
+    public function getWorkerName(): ?string
     {
-        return $this->name;
+        return $this->workerName;
     }
 
-    public function setName(string $Name): static
+    public function setWorkerName(string $workerName): static
     {
-        $this->name = $Name;
+        $this->workerName = $workerName;
 
         return $this;
     }
 
-    public function getLastName(): ?string
+    public function getWorkerLastName(): ?string
     {
-        return $this->lastName;
+        return $this->workerLastName;
     }
 
-    public function setLastName(string $LastName): static
+    public function setWorkerLastName(string $workerLastName): static
     {
-        $this->lastName = $LastName;
+        $this->workerLastName = $workerLastName;
 
         return $this;
     }
 
-    public function setId(int $id): static
+    public function setWorkerId(int $workerId): static
     {
-        $this->id = $id;
+        $this->workerId = $workerId;
 
         return $this;
     }
 
-    public function getTitle(): ?string
+    public function getWorkerTitle(): ?string
     {
-        return $this->title;
+        return $this->workerTitle;
     }
 
-    public function setTitle(string $Title): static
+    public function setWorkerTitle(string $workerTitle): static
     {
-        $this->title = $Title;
+        $this->workerTitle = $workerTitle;
 
         return $this;
     }
 
-    public function getSignature()
+    public function getWorkerSignature()
     {
-        if (is_resource($this->signature)) {
-            return base64_encode(stream_get_contents($this->signature));
+        if (is_resource($this->workerSignature)) {
+            return base64_encode(stream_get_contents($this->workerSignature));
         }
     
-        return base64_encode($this->signature);
+        return base64_encode($this->workerSignature);
     }
 
-    public function setSignature($signature): static
+    public function setWorkerSignature($workerSignature): static
     {
-        $this->signature = $signature;
+        $this->workerSignature = $workerSignature;
         return $this;
     }
 
-    public function getEmail(): ?string
+    public function getWorkerEmail(): ?string
     {
-        return $this->Email;
+        return $this->workerEmail;
     }
 
-    public function setEmail(string $Email): static
+    public function setWorkerEmail(string $workerEmail): static
     {
-        $this->Email = $Email;
+        $this->workerEmail = $workerEmail;
 
         return $this;
     }

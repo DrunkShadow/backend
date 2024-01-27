@@ -30,7 +30,7 @@ class KeywordsController extends AbstractController
 
     public function GetObjects(EntityManagerInterface $entityManager): Response
     {
-        $query = $entityManager->createQuery('SELECT DISTINCT k.concernedObject FROM App\Entity\Keywords k');
+        $query = $entityManager->createQuery('SELECT DISTINCT k.keywordConcernedObject FROM App\Entity\Keywords k');
         $result = $query->getResult();
 
         if (!$result) {

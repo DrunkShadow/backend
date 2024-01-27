@@ -9,64 +9,61 @@ use Doctrine\ORM\Mapping as ORM;
 class Keywords
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+    #[ORM\Column(length: 255)]
+    private ?int $keywordId = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $value = null;
+    private ?string $keywordValue = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $concernedObject = null;
+    private ?string $keywordCorrespondingValue = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $method = null;
+    private ?string $keywordConcernedObject = null;
+    
 
-    public function getId(): ?int
+    public function getKeywordId(): ?int
     {
-        return $this->id;
+        return $this->keywordId;
     }
 
-    public function setId(int $id): static
+    public function setKeywordId(int $keywordId): static
     {
-        $this->id = $id;
+        $this->keywordId = $keywordId;
 
         return $this;
     }
 
-    public function getValue(): ?string
+    public function getKeywordValue(): ?string
     {
-        return $this->value;
+        return $this->keywordValue;
     }
 
-    public function setValue(string $value): static
+    public function setKeywordValue(string $keywordValue): static
     {
-        $this->value = $value;
+        $this->keywordValue = $keywordValue;
 
         return $this;
     }
 
-    public function getConcernedObject(): ?string
+    public function getKeywordCorrespondingValue(): ?string
     {
-        return $this->concernedObject;
+        return $this->keywordCorrespondingValue;
     }
 
-    public function setConcernedObject(string $concernedObject): static
+    public function setKeywordCorrespondingValue(string $keywordCorrespondingValue): static
     {
-        $this->concernedObject = $concernedObject;
+        $this->keywordCorrespondingValue = $keywordCorrespondingValue;
 
         return $this;
     }
 
-    public function getMethod(): ?string
+    public function getKeywordConcernedObject(): ?string
     {
-        return $this->method;
+        return $this->keywordConcernedObject;
     }
-
-    public function setMethod(string $method): static
+    public function setKeywordConcernedObject(string $keywordConcernedObject): ?string
     {
-        $this->method = $method;
-
-        return $this;
+        return $this->keywordConcernedObject = $keywordConcernedObject;
     }
 }

@@ -12,10 +12,9 @@ use OpenApi\Attributes as OA;
 
 #[OA\Tag(name: 'Workers')]
 #[Route('/workers', name: 'workers_')]
-
 class WorkerController extends AbstractController
 {
-    #[Route('/', name: 'getAllWorkers', methods: 'GET')]
+    #[Route('', name: 'getAllWorkers', methods: 'GET')]
     public function GetWorkers(EntityManagerInterface $entityManager): Response
     {
         $workers = $entityManager->getRepository(Worker::class)->findAll();

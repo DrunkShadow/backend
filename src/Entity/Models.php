@@ -11,76 +11,76 @@ class Models
 {
     #[ORM\Id]
     #[ORM\Column(length: 255)]
-    private ?string $id = null;
+    private ?string $modelId = null;
 
     #[ORM\Column(type: Types::TEXT)]
-    private ?string $text = null;
+    private ?string $modelText = null;
 
     #[ORM\Column(nullable: true)]
-    private ?bool $concernsProject = null;
+    private ?bool $modelConcernsProject = null;
 
     #[ORM\Column(nullable: true)]
-    private ?bool $concernsWorker = null;
+    private ?bool $modelConcernsWorker = null;
 
     #[ORM\Column]
-    private ?bool $concernsEmail = null;
+    private ?bool $modelConcernsEmail = null;
 
-    public function getId(): ?string
+    public function getModelId(): ?string
     {
-        return $this->id;
+        return $this->modelId;
     }
 
-    public function setId(string $id): static
+    public function setModelId(string $modelId): static
     {
-        $this->id = $id;
+        $this->modelId = $modelId;
 
         return $this;
     }
 
-    public function getText(): ?string
+    public function getModelText(): ?string
     {
-        return $this->text;
+        return $this->modelText;
     }
 
-    public function setText(string $Text): static
+    public function setModelText(string $modelText): static
     {
-        $this->text = $Text;
+        $this->modelText = $modelText;
 
         return $this;
     }
 
-    public function isConcernsProject(): ?bool
+    public function isModelConcernsProject(): ?bool
     {
-        return $this->concernsProject;
+        return $this->modelConcernsProject;
     }
 
-    public function setConcernsProject(?bool $concernsProject): static
+    public function setModelConcernsProject(?bool $modelConcernsProject): static
     {
-        $this->concernsProject = $concernsProject;
+        $this->modelConcernsProject = $modelConcernsProject;
 
         return $this;
     }
 
-    public function isConcernsWorker(): ?bool
+    public function isModelConcernsWorker(): ?bool
     {
-        return $this->concernsWorker;
+        return $this->modelConcernsWorker;
     }
 
-    public function setConcernsWorker(?bool $concernsWorker): static
+    public function setModelConcernsWorker(?bool $modelConcernsWorker): static
     {
-        $this->concernsWorker = $concernsWorker;
+        $this->modelConcernsWorker = $modelConcernsWorker;
 
         return $this;
     }
 
-    public function isConcernsEmail(): ?bool
+    public function isModelConcernsEmail(): ?bool
     {
-        return $this->concernsEmail;
+        return $this->modelConcernsEmail;
     }
 
-    public function setConcernsEmail(bool $concernsEmail): static
+    public function setModelConcernsEmail(bool $modelConcernsEmail): static
     {
-        $this->concernsEmail = $concernsEmail;
+        $this->modelConcernsEmail = $modelConcernsEmail;
 
         return $this;
     }

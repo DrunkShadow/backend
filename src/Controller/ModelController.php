@@ -49,7 +49,7 @@ class ModelController extends AbstractController
         }
 
         $data = json_decode($request->getContent(), true);
-        $model->setText($data['text']);
+        $model->setModelText($data['modelText']);
 
         $entityManager->flush();
 
@@ -79,11 +79,11 @@ class ModelController extends AbstractController
     {
         $newModel = new Models();
         $data = json_decode($request->getContent(), true);
-        $newModel->setId($data['id']);
-        $newModel->setText($data['text']);
-        $newModel->setConcernsProject($data['concernsProject']);
-        $newModel->setConcernsWorker($data['concernsWorker']);
-        $newModel->setConcernsEmail($data['concernsEmail']);
+        $newModel->setModelId($data['modelId']);
+        $newModel->setModelText($data['modelText']);
+        $newModel->setModelConcernsProject($data['modelConcernsProject']);
+        $newModel->setModelConcernsWorker($data['modelConcernsWorker']);
+        $newModel->setModelConcernsEmail($data['modelConcernsEmail']);
 
         $entityManager->persist($newModel);
         $entityManager->flush();

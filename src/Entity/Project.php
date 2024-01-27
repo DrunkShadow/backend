@@ -7,81 +7,81 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ProjectRepository::class)]
- class Project 
+class Project
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id = null;
+    private ?int $projectId = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $name = null;
+    private ?string $projectName = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 8, scale: 3)]
-    private ?string $budget = null;
+    private ?string $projectBudget = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $category = null;
+    private ?string $projectCategory = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $date = null;
+    private ?\DateTimeInterface $projectDate = null;
 
-    public function getId(): ?int
+    public function getProjectId(): ?int
     {
-        return $this->id;
+        return $this->projectId;
     }
 
-    public function setId(int $id): static
+    public function setProjectId(int $projectId): static
     {
-        $this->id = $id;
+        $this->projectId = $projectId;
 
         return $this;
     }
 
-    public function getName(): ?string
+    public function getProjectName(): ?string
     {
-        return $this->name;
+        return $this->projectName;
     }
 
-    public function setName(string $name): static
+    public function setProjectName(string $projectName): static
     {
-        $this->name = $name;
+        $this->projectName = $projectName;
 
         return $this;
     }
 
-    public function getBudget(): ?string
+    public function getProjectBudget(): ?string
     {
-        return $this->budget;
+        return $this->projectBudget;
     }
 
-    public function setBudget(string $budget): static
+    public function setProjectBudget(string $projectBudget): static
     {
-        $this->budget = $budget;
+        $this->projectBudget = $projectBudget;
 
         return $this;
     }
 
-    public function getCategory(): ?string
+    public function getProjectCategory(): ?string
     {
-        return $this->category;
+        return $this->projectCategory;
     }
 
-    public function setCategory(string $category): static
+    public function setProjectCategory(string $projectCategory): static
     {
-        $this->category = $category;
+        $this->projectCategory = $projectCategory;
 
         return $this;
     }
 
-    public function getDate(): ?\DateTimeInterface
+    public function getProjectDate(): ?\DateTimeInterface
     {
-        return $this->date;
+        return $this->projectDate;
     }
 
-    public function setDate(\DateTimeInterface $date): static
+    public function setProjectDate(\DateTimeInterface $projectDate): static
     {
-        $this->date = $date;
+        $this->projectDate = $projectDate;
 
         return $this;
     }
