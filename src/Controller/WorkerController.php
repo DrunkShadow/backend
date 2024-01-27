@@ -19,7 +19,7 @@ class WorkerController extends AbstractController
     public function GetWorkers(EntityManagerInterface $entityManager): Response
     {
         $workers = $entityManager->getRepository(Worker::class)->findAll();
-        $workerDTOs = array_map(fn($worker) => new WorkerDTO($worker), $workers);
+        $workerDTOs = array_map(fn ($worker) => new WorkerDTO($worker), $workers);
         return $this->json($workerDTOs);
     }
     #[Route('/{workerId}', name: 'getWorkerById', methods: ['GET'],)]
@@ -34,6 +34,3 @@ class WorkerController extends AbstractController
         return $this->json($worker);
     }
 }
-
-
-        

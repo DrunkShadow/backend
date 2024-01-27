@@ -163,3 +163,15 @@
              {# <select [(ngModel)]="selectObjects" multiple >
                     <option *ngFor="let obj of keyObjectsArray" (click)="onChosen(obj.concernedObject)">{{obj.concernedObject}}</option>
             </select> #}
+
+
+
+NELMIO CORS
+
+ defaults:
+        origin_regex: true
+        allow_origin: ['http://localhost:4200']
+        allow_methods: ['GET', 'OPTIONS', 'POST', 'PUT', 'PATCH', 'DELETE']
+        allow_headers: ['Content-Type', 'Authorization','Accept']
+        expose_headers: ['Link']
+        max_age: 3600

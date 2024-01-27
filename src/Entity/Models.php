@@ -22,6 +22,9 @@ class Models
     #[ORM\Column(nullable: true)]
     private ?bool $concernsWorker = null;
 
+    #[ORM\Column]
+    private ?bool $concernsEmail = null;
+
     public function getId(): ?string
     {
         return $this->id;
@@ -66,6 +69,18 @@ class Models
     public function setConcernsWorker(?bool $concernsWorker): static
     {
         $this->concernsWorker = $concernsWorker;
+
+        return $this;
+    }
+
+    public function isConcernsEmail(): ?bool
+    {
+        return $this->concernsEmail;
+    }
+
+    public function setConcernsEmail(bool $concernsEmail): static
+    {
+        $this->concernsEmail = $concernsEmail;
 
         return $this;
     }

@@ -13,7 +13,7 @@ use OpenApi\Attributes as OA;
 class KeywordsController extends AbstractController
 {
 
-    #[Route('/keywords', name: 'getAllKeywords',methods:'GET')]
+    #[Route('/keywords', name: 'getAllKeywords', methods: 'GET')]
     public function GetKeywords(EntityManagerInterface $entityManager): Response
     {
         $keywords = $entityManager->getRepository(Keywords::class)->findAll();
@@ -25,20 +25,18 @@ class KeywordsController extends AbstractController
         return $this->json($keywords);
     }
 
-    
-    #[Route('/keywordsObjects', name: 'getAllKeywordsObjects',methods:'GET')]
+
+    #[Route('/keywordsObjects', name: 'getAllKeywordsObjects', methods: 'GET')]
 
     public function GetObjects(EntityManagerInterface $entityManager): Response
     {
         $query = $entityManager->createQuery('SELECT DISTINCT k.concernedObject FROM App\Entity\Keywords k');
         $result = $query->getResult();
-    
+
         if (!$result) {
             return $this->json(['error' => 'No projects found'], 404);
         }
-    
+
         return $this->json($result);
     }
 }
-
-        

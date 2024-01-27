@@ -26,6 +26,9 @@ class Worker
     #[ORM\Column(type: Types::BLOB)]
     private $signature = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $Email = null;
+
 
     public function getId(): ?int
     {
@@ -87,6 +90,18 @@ class Worker
     public function setSignature($signature): static
     {
         $this->signature = $signature;
+        return $this;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->Email;
+    }
+
+    public function setEmail(string $Email): static
+    {
+        $this->Email = $Email;
+
         return $this;
     }
 }

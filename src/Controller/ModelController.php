@@ -43,21 +43,21 @@ class ModelController extends AbstractController
     public function PutModel(EntityManagerInterface $entityManager, Request $request, string $modelId): Response
     {
         $model = $entityManager->getRepository(Models::class)->find($modelId);
-    
+
         if (!$model) {
             return $this->json(['error' => 'Model not found'], 404);
         }
-    
+
         $data = json_decode($request->getContent(), true);
-        $model->setText($data['text']); 
-    
+        $model->setText($data['text']);
+
         $entityManager->flush();
-    
+
         return $this->json(['message' => 'Model updated successfully']);
     }
 
 
-    
+
 
     #[Route('/{modelId}', name: 'DeleteModel', methods: ['DELETE'],)]
     public function DeleteModel(EntityManagerInterface $entityManager, Request $request, string $modelId): Response
@@ -67,14 +67,14 @@ class ModelController extends AbstractController
         if (!$model) {
             return $this->json(['error' => 'Model not found'], 404);
         }
-    
+
         $entityManager->remove($model);
         $entityManager->flush();
-    
+
         return $this->json(['message' => 'Model deleted successfully']);
     }
 
-    #[Route('', name: 'createModel', methods: ['POST'],format: 'json')]
+    #[Route('', name: 'createModel', methods: ['POST'], format: 'json')]
     public function createModel(EntityManagerInterface $entityManager, Request $request): Response
     {
         $newModel = new Models();
@@ -83,9 +83,11 @@ class ModelController extends AbstractController
         $newModel->setText($data['text']);
         $newModel->setConcernsProject($data['concernsProject']);
         $newModel->setConcernsWorker($data['concernsWorker']);
+        $newModel->setConcernsEmail($data['concernsEmail']);
+
         $entityManager->persist($newModel);
         $entityManager->flush();
-    
+
         return $this->json(['message' => 'Model updated successfully']);
     }
 

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use App\Entity\Keywords;
@@ -7,12 +8,16 @@ use App\Entity\Worker;
 use App\Entity\Models;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
+
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManagerInterface;
 use OpenApi\Attributes as OA;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
-
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Mime\Part\DataPart;
+use Symfony\Component\Mime\Part\File;
 use TCPDF;
 
 
@@ -33,7 +38,7 @@ class OutputsController extends AbstractController
         $pdf->AddPage();
 
         $html = '<h1>' . str_replace(' ', '&nbsp;', $model->getId()) . '</h1> <br> <p>'
-        . nl2br($this->replaceKeywords($entityManager, $model->getText(), $id)) . '</p>';
+            . nl2br($this->replaceKeywords($entityManager, $model->getText(), $id)) . '</p>';
 
 
         $pdf->writeHTML($html, true, false, true, false, '');
@@ -91,36 +96,53 @@ class OutputsController extends AbstractController
                 '{{ worker_name }}' => $entity->getName(),
                 '{{ worker_last_name }}' => $entity->getLastName(),
                 '{{ worker_title }}' => $entity->getTitle(),
-                '{{ worker_signature }}' => '<img src="data:image/jpeg;base64,' . $entity->getSignature() . '" style="width: 200px; height: auto;"/>',
+                // '{{ worker_signature }}' => '<img src="data:image/jpeg;base64,' . $entity->getSignature() . '" style="width: 200px; height: auto;"/>',
 
             ];
         }
 
         return [];
     }
-
-    #[Route('/sendEmail', name: 'server', methods: 'GET')]
-    public function sendEmail(MailerInterface $mailer): Response
+    #[Route('/sendEmail/{emailModelId}/{chosenEntityId}', name: 'server', methods: 'GET',)]
+    public function sendEmail(MailerInterface $mailer, EntityManagerInterface $entityManager,Request $request, string $emailModelId, string $chosenEntityId): Response
     {
-    
-    $subject = 'Your Email Subject'; 
-    $email = (new Email())
-        ->from('SoftSquare@test.com')
-        ->to('chaabenranim8@gmail.com')
-        ->subject($subject)
-        ->text('Sending emails is fun again!')
-        ->html('<p>See Twig integration for better HTML integration!</p>');
-
-    try {
-        $mailer->send($email);
-        return new Response('Email sent successfully');
-        } catch (\Exception $e) {
-            return  new Response('Email was not sent');
-    }
-}
-
-}
-
-
-
+        $model = $entityManager->getRepository(Models::class)->find($emailModelId);
+        $entity = $entityManager->getRepository(Worker::class)->find($chosenEntityId);
         
+        $tempFolder = $this->getParameter('kernel.project_dir') . '/var/temp/' . uniqid();
+        $filesystem = new Filesystem();
+        $filesystem->mkdir($tempFolder);
+
+        // $modelsToAttach = (array)$request->query->get('sentAttachments');
+        $receivedStr = $request->query->get('sentAttachments');
+        $modelsToAttach= explode(', ',$receivedStr);  
+        
+
+
+        $email = (new Email())
+            ->from('teeesstt@cccc.com')
+            ->to($entity->getEmail())
+            ->subject($model->getId())
+            ->text($this->replaceKeywords($entityManager, $model->getText(), $chosenEntityId));
+
+            foreach($modelsToAttach as $modelToAttach)
+            {
+                $pdf = $this->generatePdf($entityManager, $modelToAttach, $chosenEntityId);
+                $pdfFilename = $tempFolder . '/'. $modelToAttach .'.pdf';
+                file_put_contents($pdfFilename, $pdf);
+                $email->addPart(new DataPart(new File($pdfFilename)));
+            }
+            
+
+        try {
+            $mailer->send($email);
+            return new Response(200);
+        } catch (\Exception $e) {
+            return new Response($e);
+        } finally {
+            $filesystem->remove($tempFolder);
+        }
+    }
+
+    
+}
