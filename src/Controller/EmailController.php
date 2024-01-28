@@ -25,11 +25,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 #[OA\Tag(name: 'Emails')]
 #[Route('/email', name: 'mailing', methods: 'GET')]
 class EmailController extends AbstractController
-{ 
+{
+    private static int $lastEmailId;
+
     #[Route('/sendEmail/{emailModelId}/{chosenEntityId}', name: 'server', methods: 'GET',)]
     public function sendEmail(LoggerInterface $log,downloadPdf $dwPdf,replaceWords $rep,MailerInterface $mailer, EntityManagerInterface $entityManager,Request $request, string $emailModelId, string $chosenEntityId): Response
     {
-
         $model = $entityManager->getRepository(Models::class)->find($emailModelId);
         $entity = $entityManager->getRepository(Worker::class)->find($chosenEntityId);
         
@@ -44,15 +45,17 @@ class EmailController extends AbstractController
             ->to($entity->getWorkerEmail())
             ->subject($model->getModelId())
             ->text($rep->replaceKeywords($entityManager, $model->getModelText(), $chosenEntityId));
-            $this->AddEmailHistory($entityManager,$email);
-
-
+            $emailId=$this->AddEmailHistory($entityManager,$email);
             foreach($modelsToAttach as $modelToAttach)
             {
                 $pdf = $dwPdf->generatePdf($entityManager,$rep, $modelToAttach, $chosenEntityId);
-                $pdfFilename = $tempFolder . '/'. $modelToAttach .'.pdf';
+                $pdfFilename = $tempFolder . '/' .$modelToAttach . '.pdf';
                 file_put_contents($pdfFilename, $pdf);
-                $email->addPart(new DataPart(new File($pdfFilename)));
+                $file = new DataPart(new File($pdfFilename));
+
+                $this->AddAttachemnt($entityManager,$pdf,$emailId);
+
+                $email->addPart($file);
             }
         try {
             $mailer->send($email);
@@ -65,7 +68,7 @@ class EmailController extends AbstractController
         }
     }
     #[Route('', name: 'addEmail', methods: 'POST',)]
-    public function AddEmailHistory(EntityManagerInterface $entityManager, Email $email): Response
+    public function AddEmailHistory(EntityManagerInterface $entityManager, Email $email): int|Response
     {
         $source = implode(', ', array_map(function (Address $address) {
             return $address->getAddress();
@@ -83,7 +86,7 @@ class EmailController extends AbstractController
         $newEmail->setEmailSubject($email->getSubject());
         $entityManager->persist($newEmail);
         $entityManager->flush();
-        return new Response(200);
+        return $newEmail->getEmailId();
             } catch (\Exception $e) {
         return new Response('An error occurred', 500);
             }
