@@ -20,6 +20,9 @@ class Keywords
 
     #[ORM\Column(length: 255)]
     private ?string $keywordConcernedObject = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $keywordType = null;
     
 
     public function getKeywordId(): ?int
@@ -65,5 +68,17 @@ class Keywords
     public function setKeywordConcernedObject(string $keywordConcernedObject): ?string
     {
         return $this->keywordConcernedObject = $keywordConcernedObject;
+    }
+
+    public function getKeywordType(): ?string
+    {
+        return $this->keywordType;
+    }
+
+    public function setKeywordType(?string $keywordType): static
+    {
+        $this->keywordType = $keywordType;
+
+        return $this;
     }
 }

@@ -25,11 +25,11 @@ class WorkerController extends AbstractController
     public function GetProjectById(EntityManagerInterface $entityManager, string $workerId): Response
     {
         $worker = $entityManager->getRepository(Worker::class)->find($workerId);
-
+        $workerDTOs = array_map(fn ($worker) => new WorkerDTO($worker), $worker);
         if (!$worker) {
             return $this->json(['error' => 'No projects found'], 404);
         }
 
-        return $this->json($worker);
+        return $this->json($workerDTOs);
     }
 }

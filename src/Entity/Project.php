@@ -26,6 +26,9 @@ class Project
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $projectDate = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $projectLink = null;
+
     public function getProjectId(): ?int
     {
         return $this->projectId;
@@ -82,6 +85,18 @@ class Project
     public function setProjectDate(\DateTimeInterface $projectDate): static
     {
         $this->projectDate = $projectDate;
+
+        return $this;
+    }
+
+    public function getProjectLink(): ?string
+    {
+        return $this->projectLink;
+    }
+
+    public function setProjectLink(string $projectLink): static
+    {
+        $this->projectLink = $projectLink;
 
         return $this;
     }

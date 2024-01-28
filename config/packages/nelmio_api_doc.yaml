@@ -10,7 +10,8 @@ nelmio_api_doc:
             - /projects?
             - /keywords?
             - /models
-            - /services
+            - /pdf
+            - /email
     models:
         use_jms: true
     
