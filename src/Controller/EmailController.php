@@ -19,7 +19,6 @@ use App\Services\replaceWords;
 use App\Services\downloadPdf;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Mime\Address;
-use App\DTO\AttachmentDTO;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/email', name: 'mailing')]
@@ -92,6 +91,8 @@ class EmailController extends AbstractController
         $newEmail->setEmailTarget($target);
         $newEmail->setEmailSource($source);
         $newEmail->setEmailSubject($email->getSubject());
+        $newEmail->setEmailSource($source);
+        $newEmail->setEmailDate(new \DateTime());
         $entityManager->persist($newEmail);
         $entityManager->flush();
         return $newEmail->getEmailId();

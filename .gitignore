@@ -20,6 +20,11 @@
 ###< symfony/phpunit-bridge ###
 
 ###> symfony/asset-mapper ###
+/public/attachmentPdf
+/public/attachmentPdf
+/public/workerSignature
+
+
 /public/assets/
 /assets/vendor
 ###< symfony/asset-mapper ###

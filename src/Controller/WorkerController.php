@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\DTO\WorkerDTO;
 use App\Entity\Worker;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Doctrine\ORM\EntityManagerInterface;
@@ -18,7 +17,9 @@ class WorkerController extends AbstractController
     public function GetWorkers(EntityManagerInterface $entityManager): Response
     {
         $workers = $entityManager->getRepository(Worker::class)->findAll();
-        $workerDTOs = array_map(fn ($worker) => new WorkerDTO($worker), $workers);
-        return $this->json($workerDTOs);
+        if (!$workers) {
+            return $this->json(['error' => 'No projects found'], 404);
+        }
+        return $this->json($workers);
     }
 }

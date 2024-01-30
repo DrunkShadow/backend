@@ -26,6 +26,9 @@ class Email
     #[ORM\Column(type: Types::TEXT)]
     private ?string $emailText = null;
 
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $emailDate = null;
+
     public function getEmailId(): ?int
     {
         return $this->emailId;
@@ -81,6 +84,18 @@ class Email
     public function setEmailText(string $emailText): static
     {
         $this->emailText = $emailText;
+
+        return $this;
+    }
+
+    public function getEmailDate(): ?\DateTimeInterface
+    {
+        return $this->emailDate;
+    }
+
+    public function setEmailDate(\DateTimeInterface $emailDate): static
+    {
+        $this->emailDate = $emailDate;
 
         return $this;
     }

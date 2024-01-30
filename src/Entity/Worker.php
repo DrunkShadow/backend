@@ -23,7 +23,7 @@ class Worker
     #[ORM\Column(length: 40)]
     private ?string $workerTitle = null;
 
-    #[ORM\Column(type: Types::BLOB)]
+    #[ORM\Column(length: 255)]
     private $workerSignature = null;
 
     #[ORM\Column(length: 255)]
@@ -78,13 +78,10 @@ class Worker
         return $this;
     }
 
-    public function getWorkerSignature()
+    public function getWorkerSignature() : ?string
     {
-        if (is_resource($this->workerSignature)) {
-            return base64_encode(stream_get_contents($this->workerSignature));
-        }
+        return $this->workerSignature;
     
-        return base64_encode($this->workerSignature);
     }
 
     public function setWorkerSignature($workerSignature): static
