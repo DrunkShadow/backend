@@ -5,9 +5,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Doctrine\ORM\EntityManagerInterface;
 use TCPDF;
 use App\Services\replaceWords;
+use Psr\Log\LoggerInterface;
 
 class downloadPdf{
-    public function generatePdf(EntityManagerInterface $entityManager,replaceWords $rep, string $modelId, string $id): Response
+    public function generatePdf(LoggerInterface $log,EntityManagerInterface $entityManager,replaceWords $rep, string $modelId, string $id): Response
     {
         $model = $entityManager->getRepository(Models::class)->find($modelId);
 
@@ -19,9 +20,7 @@ class downloadPdf{
         $pdf->AddPage();
 
         $html = '<h1>' . str_replace(' ', '&nbsp;', $model->getModelId()) . '</h1> <br> <p>'
-            . nl2br($rep->replaceKeywords($entityManager, $model->getModelText(), $id) ) . '</p>';
-
-
+            . nl2br($rep->replaceKeywords($log,$entityManager, $model->getModelText(), $id) ) . '</p>';
         $pdf->writeHTML($html, true, false, true, false, '');
 
         $output = $pdf->Output('example.pdf', 'S');

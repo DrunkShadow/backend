@@ -14,11 +14,14 @@ class Attachment
     #[ORM\Column]
     private ?int $attachmentId = null;
 
-    #[ORM\Column(type: Types::BLOB)]
-    private $attachmentFile = null;
-
     #[ORM\Column]
     private ?int $attachmentContainingEmailId = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $attachmentName = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $attachmentFilePath = null;
 
     public function getAttachmentId(): ?int
     {
@@ -32,18 +35,6 @@ class Attachment
         return $this;
     }
 
-    public function getAttachmentFile()
-    {
-        return $this->attachmentFile;
-    }
-
-    public function setAttachmentFile($attachmentFile): static
-    {
-        $this->attachmentFile = $attachmentFile;
-
-        return $this;
-    }
-
     public function getAttachmentContainingEmailId(): ?int
     {
         return $this->attachmentContainingEmailId;
@@ -52,6 +43,29 @@ class Attachment
     public function setAttachmentContainingEmailId(int $attachmentContainingEmailId): static
     {
         $this->attachmentContainingEmailId = $attachmentContainingEmailId;
+
+        return $this;
+    }
+
+    public function getAttachmentName(): ?string
+    {
+        return $this->attachmentName;
+    }
+
+    public function setAttachmentName(string $attachmentName): static
+    {
+        $this->attachmentName = $attachmentName;
+
+        return $this;
+    }
+    public function getAttachmentFilePath(): ?string
+    {
+        return $this->attachmentFilePath;
+    }
+
+    public function setAttachmentFilePath(string $attachmentFilePath): static
+    {
+        $this->attachmentFilePath = $attachmentFilePath;
 
         return $this;
     }

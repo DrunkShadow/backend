@@ -21,15 +21,4 @@ class WorkerController extends AbstractController
         $workerDTOs = array_map(fn ($worker) => new WorkerDTO($worker), $workers);
         return $this->json($workerDTOs);
     }
-    #[Route('/{workerId}', name: 'getWorkerById', methods: ['GET'],)]
-    public function GetProjectById(EntityManagerInterface $entityManager, string $workerId): Response
-    {
-        $worker = $entityManager->getRepository(Worker::class)->find($workerId);
-        $workerDTOs = array_map(fn ($worker) => new WorkerDTO($worker), $worker);
-        if (!$worker) {
-            return $this->json(['error' => 'No projects found'], 404);
-        }
-
-        return $this->json($workerDTOs);
-    }
 }
