@@ -15,7 +15,6 @@ class downloadPdf{
         if (!$model) {
             return new Response(404);
         }
-
         $pdf = new TCPDF();
         $pdf->AddPage();
 

@@ -21,8 +21,6 @@ class replaceWords{
 
         if($entity != null && is_object($entity))
         {
-
-            
             $replacement=eval('return ' . $key->getKeywordCorrespondingValue() .";");
             if($key->getKeywordType()=='link')  {$replacement = '<a href="' . $replacement . '">link</a>';} // add the value 
             if($key->getKeywordType()=='date')  {$replacement = $replacement->format('d-m-Y');} 

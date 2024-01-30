@@ -26,7 +26,7 @@ class EmailController extends AbstractController
 {
     #[OA\Tag(name: 'Emails')]
     #[Route('/sendEmail/{emailModelId}/{chosenEntityId}', name: 'server', methods: 'GET',)]
-    public function sendEmail(LoggerInterface $log,downloadPdf $dwPdf,replaceWords $rep,MailerInterface $mailer, EntityManagerInterface $entityManager,Request $request, string $emailModelId, string $chosenEntityId): Response
+    public function sendEmail(LoggerInterface $log,downloadPdf $dwPdf,replaceWords $rep,MailerInterface $mailer, EntityManagerInterface $entityManager, string $emailModelId, string $chosenEntityId): Response
     {
         $model = $entityManager->getRepository(Models::class)->find($emailModelId);
         $entity = $entityManager->getRepository(Worker::class)->find($chosenEntityId);
@@ -34,8 +34,6 @@ class EmailController extends AbstractController
         $Folder = $this->getParameter('kernel.project_dir') . '/public/attachmentPdf';
         $filesystem = new Filesystem();
         $filesystem->mkdir($Folder);
-        $receivedStr = $request->query->get('sentAttachments');
-        $modelsToAttach= explode(', ',$receivedStr);  
 
         $email = (new Email())
             ->from('teeesstt@cccc.com')
@@ -43,6 +41,7 @@ class EmailController extends AbstractController
             ->subject($model->getModelId())
             ->text($rep->replaceKeywords($log,$entityManager, $model->getModelText(), $chosenEntityId));
             $emailId=$this->AddEmailHistory($entityManager,$email);
+            $modelsToAttach=$model->getModelEmailAttachment();
             foreach($modelsToAttach as $modelToAttach)
             {
                 if($modelToAttach)

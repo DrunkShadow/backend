@@ -84,6 +84,8 @@ class ModelController extends AbstractController
         $newModel->setModelConcernsProject($data['modelConcernsProject']);
         $newModel->setModelConcernsWorker($data['modelConcernsWorker']);
         $newModel->setModelConcernsEmail($data['modelConcernsEmail']);
+        $newModel->setModelEmailAttachment($data['modelEmailAttachment']);
+
 
         $entityManager->persist($newModel);
         $entityManager->flush();

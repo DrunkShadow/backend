@@ -25,6 +25,9 @@ class Models
     #[ORM\Column]
     private ?bool $modelConcernsEmail = null;
 
+    #[ORM\Column(type: Types::ARRAY, nullable: true)]
+    private ?array $modelEmailAttachment = null;
+
     public function getModelId(): ?string
     {
         return $this->modelId;
@@ -81,6 +84,18 @@ class Models
     public function setModelConcernsEmail(bool $modelConcernsEmail): static
     {
         $this->modelConcernsEmail = $modelConcernsEmail;
+
+        return $this;
+    }
+
+    public function getModelEmailAttachment(): ?array
+    {
+        return $this->modelEmailAttachment;
+    }
+
+    public function setModelEmailAttachment(?array $modelEmailAttachment): static
+    {
+        $this->modelEmailAttachment = $modelEmailAttachment;
 
         return $this;
     }
