@@ -22,10 +22,10 @@ class PdfController extends AbstractController
         return $dwPdf->generatePdf($log,$entityManager,$rep,$modelId,$id);
     }
 
-    #[Route('/downloadPDF/{reference}/{height}/{width}/{perRow}', name: 'downloadBar', methods: ['GET'])]
-    public function generateBarPdf(EntityManagerInterface $entityManager,Barcode $bar, LoggerInterface $log,string $reference,downloadPdf $dwPdf,int $height,int $width,int $perRow): Response
+    #[Route('/downloadPDF/{reference}/{height}/{width}/{perRow}/{chosenCat}', name: 'downloadBar', methods: ['GET'])]
+    public function generateBarPdf(EntityManagerInterface $entityManager,Barcode $bar, LoggerInterface $log,string $reference,downloadPdf $dwPdf,int $height,int $width,int $perRow,string $chosenCat): Response
     {
-      return $dwPdf->generateBarPdf($entityManager,$bar,$reference,$height,$width,$perRow);
+      return $dwPdf->generateBarPdf($entityManager,$bar,$reference,$height,$width,$perRow,$chosenCat);
     }
 
 }

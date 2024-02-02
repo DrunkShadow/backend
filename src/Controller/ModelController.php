@@ -22,7 +22,7 @@ class ModelController extends AbstractController
         $models = $entityManager->getRepository(Models::class)->findAll();
 
         if (!$models) {
-            return $this->json(['error' => 'No projects found'], 404);
+            return $this->json(['error' => 'No models  found'], 404);
         }
         return $this->json($models);
     }
@@ -33,7 +33,7 @@ class ModelController extends AbstractController
         $model = $entityManager->getRepository(Models::class)->find($modelId);
 
         if (!$model) {
-            return $this->json(['error' => 'No projects found'], 404);
+            return $this->json(['error' => 'No models found'], 404);
         }
 
         return $this->json($model);

@@ -18,7 +18,7 @@ class WorkerController extends AbstractController
     {
         $workers = $entityManager->getRepository(Worker::class)->findAll();
         if (!$workers) {
-            return $this->json(['error' => 'No projects found'], 404);
+            return $this->json(['error' => 'No worker found'], 404);
         }
         return $this->json($workers);
     }

@@ -36,7 +36,7 @@ class downloadPdf{
         return $response;
     }
 
-    public function generateBarPdf(EntityManagerInterface $entityManager,Barcode $barcodeService,string $reference,int $height,int $width,int $perRow): Response
+    public function generateBarPdf(EntityManagerInterface $entityManager,Barcode $barcodeService,string $reference,int $height,int $width,int $perRow,string $chosenCat): Response
     {
 
         $pdf = new TCPDF();
@@ -47,7 +47,7 @@ class downloadPdf{
         $options->set('isRemoteEnabled', true);
         $options->set('isPhpEnabled', true);
         $dompdf = new Dompdf($options);
-
+        $index=0;
             if($reference)
             {
                 $barcodeResponse = $barcodeService->generateBarcodeAction($reference);
@@ -62,17 +62,22 @@ class downloadPdf{
             else{
                 $mats = $entityManager->getRepository(Materielle::class)->findAll();
                 for ($i = 0; $i < count($mats); $i++) {
-                    $barcodeResponse = $barcodeService->generateBarcodeAction($mats[$i]->getReference());
-                    $barcodeHtml = $barcodeResponse->getContent();
-                    $widthOfElement= (100/$perRow)-2;
-                    $html .= '<div style="display:inline-block; width:'.$widthOfElement.'%; margin-right:2%; text-align:center;">';
-                    $html .= '<div style="text-align: center;">' . $mats[$i]->getTitre() . '</div>';
-                    $html .= '<div style="text-align: center; display:inline-block;">' . $barcodeHtml . '</div>';
-                    $html .= '<div style="text-align: center;">' . $mats[$i]->getReference() . '</div>';
-                    $html .= '<div style="text-align: center;">' . '<img style="display:inline-block; width:100%;" src="http://localhost/backend/public/barcodeImages/placeholder.jpg" alt="image">' . '</div>';
-                    $html .= '</div>';
-                    if (($i + 1) % $perRow == 0) {
-                        $html .= '<br><br>';
+                    if($chosenCat === $mats[$i]->getCategorie() || $chosenCat=="All")
+                    {
+                        
+                        $barcodeResponse = $barcodeService->generateBarcodeAction($mats[$i]->getReference());
+                        $barcodeHtml = $barcodeResponse->getContent();
+                        $widthOfElement= (100/$perRow)-2;
+                        $html .= '<div style="display:inline-block; width:'.$widthOfElement.'%; margin-right:2%; text-align:center;">';
+                        $html .= '<div style="text-align: center;">' . $mats[$i]->getTitre() . '</div>';
+                        $html .= '<div style="text-align: center; display:inline-block;">' . $barcodeHtml . '</div>';
+                        $html .= '<div style="text-align: center;">' . $mats[$i]->getReference() . '</div>';
+                        $html .= '<div style="text-align: center;">' . '<img style="display:inline-block; width:100%;" src="http://localhost/backend/public/barcodeImages/placeholder.jpg" alt="image">' . '</div>';
+                        $html .= '</div>';
+                        if (($index + 1) % $perRow == 0) {
+                            $html .= '<br><br>';
+                        }
+                        $index++;
                     }
                 }
             }

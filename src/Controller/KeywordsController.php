@@ -19,7 +19,7 @@ class KeywordsController extends AbstractController
         $keywords = $entityManager->getRepository(Keywords::class)->findAll();
 
         if (!$keywords) {
-            return $this->json(['error' => 'No projects found'], 404);
+            return $this->json(['error' => 'No keywords found'], 404);
         }
 
         return $this->json($keywords);
@@ -34,7 +34,7 @@ class KeywordsController extends AbstractController
         $result = $query->getResult();
 
         if (!$result) {
-            return $this->json(['error' => 'No projects found'], 404);
+            return $this->json(['error' => 'No keywords found'], 404);
         }
 
         return $this->json($result);

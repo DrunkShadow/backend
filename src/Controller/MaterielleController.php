@@ -13,7 +13,7 @@ use Psr\Log\LoggerInterface;
 
 
 #[OA\Tag(name: 'Materielle')]
-#[Route('/materielle', name: 'serving', methods: 'GET')]
+#[Route('/materielle', name: 'serving ', methods: 'GET')]
 class MaterielleController extends AbstractController
 {
     #[Route('', name: 'getAllMaterielle', methods: 'GET')]
@@ -40,20 +40,20 @@ class MaterielleController extends AbstractController
         return $this->json($Materielle);
     }
 
-    #[Route('/{reference}', name: 'DeleteModel', methods: ['DELETE'],)]
-    public function DeleteModel(EntityManagerInterface $entityManager, Request $request, string $reference): Response
+    #[Route('/{reference}', name: 'DeleteMaterielle', methods: ['DELETE'],)]
+    public function DeleteMaterielle(EntityManagerInterface $entityManager, Request $request, string $reference): Response
     {
         $mat = $entityManager->getRepository(Materielle::class)->find($reference);
         if (!$mat) {
-            return $this->json(['error' => 'Model not found'], 404);
+            return $this->json(['error' => 'Materielle not found'], 404);
         }
         $entityManager->remove($mat);
         $entityManager->flush();
-        return $this->json(['message' => 'Model deleted successfully']);
+        return $this->json(['message' => 'Materielle deleted successfully']);
     }
 
-    #[Route('', name: 'createModel', methods: ['POST'], format: 'json')]
-    public function createModel(EntityManagerInterface $entityManager, Request $request,LoggerInterface $log): Response
+    #[Route('', name: 'createMaterielle', methods: ['POST'], format: 'json')]
+    public function createMaterielle(EntityManagerInterface $entityManager, Request $request): Response
     {
         $newMaterielle = new Materielle();
         $data = json_decode($request->getContent(), true);
@@ -65,20 +65,21 @@ class MaterielleController extends AbstractController
         $newMaterielle->setDate($data['date']);
         $entityManager->persist($newMaterielle);
         $entityManager->flush();
-        return $this->json(['message' => 'Model updated successfully']);
+        return $this->json(['message' => 'Materielle updated successfully']);
     }
 
-    #[Route('/{reference}', name: 'putModelById', methods: ['PUT'],)]
-    public function PutModel(EntityManagerInterface $entityManager, Request $request, string $reference): Response
+    #[Route('/update/{reference}', name: 'putMaterielleById', methods: ['PUT'],)]
+    public function PutMaterielle(LoggerInterface $log,EntityManagerInterface $entityManager, Request $request, string $reference): Response
     {
         $materielle = $entityManager->getRepository(Materielle::class)->find($reference);
 
         if (!$materielle) {
-            return $this->json(['error' => 'Model not found'], 404);
+            return $this->json(['error' => 'Materielle not found'], 404);
         }
 
         $data = json_decode($request->getContent(), true);
-        $materielle->setReference($data['reference']);
+        $log->info("*************************************************");
+        $log->info($data['description']);
         $materielle->setTitre($data['titre']);
         $materielle->setDescription($data['description']);
         $materielle->setCategorie($data['categorie']);
@@ -87,7 +88,18 @@ class MaterielleController extends AbstractController
 
         $entityManager->flush();
 
-        return $this->json(['message' => 'Model updated successfully']);
+        return $this->json(['message' => 'Materielle updated successfully']);
+    }
+
+    #[Route('/Categories/distinct', name: 'getDistinctCategories', methods: 'GET')]
+    public function GetDistinctCategories(EntityManagerInterface $entityManager): Response
+    {
+        $query = $entityManager->createQuery('SELECT DISTINCT m.categorie FROM App\Entity\Materielle m');
+        $result = $query->getResult();
+        if (!$result) {
+            return $this->json(['error' => 'No categories found'], 404);
+        }
+        return $this->json($result);
     }
 
 

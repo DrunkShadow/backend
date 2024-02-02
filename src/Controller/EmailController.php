@@ -61,7 +61,6 @@ class EmailController extends AbstractController
                 $email->addPart($file);
 
                 $this->AddAttachment($entityManager,$modelToAttach,$emailId,$result);
-
                 }
             }
         try {
@@ -106,7 +105,7 @@ class EmailController extends AbstractController
         $emails = $entityManager->getRepository(entityEmail::class)->findAll();
 
         if (!$emails) {
-            return $this->json(['error' => 'No projects found'], 404);
+            return $this->json(['error' => 'No Emails found'], 404);
         }
 
         return $this->json($emails);
@@ -120,7 +119,7 @@ class EmailController extends AbstractController
         $email = $entityManager->getRepository(entityEmail::class)->find($id);
 
         if (!$email) {
-            return $this->json(['error' => 'No projects found'], 404);
+            return $this->json(['error' => 'No Emails found'], 404);
         }
 
         return $this->json($email);
@@ -150,7 +149,7 @@ class EmailController extends AbstractController
     {
         $attachments = $entityManager->getRepository(Attachment::class)->findAll();
         if (!$attachments) {
-            return $this->json(['error' => 'No projects found'], 404);
+            return $this->json(['error' => 'No Attachments found'], 404);
         }
         return $this->json($attachments);
 
@@ -161,7 +160,7 @@ class EmailController extends AbstractController
     {
         $attachment = $entityManager->getRepository(Attachment::class)->find($id);
         if (!$attachment) {
-            return $this->json(['error' => 'No projects found'], 404);
+            return $this->json(['error' => 'No Attachments found'], 404);
         }
         return $this->json($attachment);
 
@@ -176,7 +175,7 @@ class EmailController extends AbstractController
         $result = $query->getResult();
 
         if (!$result) {
-            return $this->json(['error' => 'No projects found'], 404);
+            return $this->json(['error' => 'No Attachments found'], 404);
         }
 
         return $this->json($result);

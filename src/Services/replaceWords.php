@@ -24,10 +24,10 @@ class replaceWords{
             $replacement=eval('return ' . $key->getKeywordCorrespondingValue() .";");
             if($key->getKeywordType()=='link')  {$replacement = '<a href="' . $replacement . '">link</a>';} // add the value 
             if($key->getKeywordType()=='date')  {$replacement = $replacement->format('d-m-Y');} 
-            //if($key->getKeywordType()=='image')  {$replacement = '<img src="http://localhost/backend/public/'. $key->getKeywordCorrespondingValue() . '/' .$replacement . '" width="100" height="100"/>';} 
+            //if($key->getKeywordType()=='image')  {$replacement = '<img src="http://localhost/backend/public/'. preg_replace('/\$entity->get|\(\)/', '', $key->getKeywordCorrespondingValue()) . '/' .$replacement . '" width="100" height="100"/>';} 
             if ($key->getKeywordType() == 'image') {
-
                 $imagePath = 'http://localhost/backend/public/' . preg_replace('/\$entity->get|\(\)/', '', $key->getKeywordCorrespondingValue()) . '/' . $replacement;
+                //this means that the image folders must resembles the entities attribute, for ex the folder must be named workerSignature which is the attribute's name 
                 $imageContent = file_get_contents($imagePath);
                 $imageInfo = getimagesizefromstring($imageContent);
                 $imageType = $imageInfo['mime'];
