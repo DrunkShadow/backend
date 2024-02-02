@@ -1,0 +1,2 @@
+Make sure when adding new pdf models, they must have the entity's name upfront, for example if you will add a worker's name model YOU MUST WRITE worker (...) 
+the folder's containing entities files such as images/files must be put in public repository, in a folder that has the attributes name, for instance if u have a workerSignature attribute that is a picture, there must be a folder in public under the name 'workerSignature'
