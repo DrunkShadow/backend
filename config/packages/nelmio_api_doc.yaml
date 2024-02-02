@@ -12,6 +12,8 @@ nelmio_api_doc:
             - /models
             - /pdf
             - /email
+            - /materielle
+            - /barcode
     models:
         use_jms: true
     

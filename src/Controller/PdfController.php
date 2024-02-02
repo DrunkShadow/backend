@@ -9,6 +9,7 @@ use OpenApi\Attributes as OA;
 use App\Services\replaceWords;
 use App\Services\downloadPdf;
 use Psr\Log\LoggerInterface;
+use App\Services\Barcode;
 
 
 #[OA\Tag(name: 'Pdf')]
@@ -19,6 +20,12 @@ class PdfController extends AbstractController
     public function generatePdf(LoggerInterface $log,EntityManagerInterface $entityManager,replaceWords $rep,downloadPdf $dwPdf, string $modelId, string $id): Response
     {
         return $dwPdf->generatePdf($log,$entityManager,$rep,$modelId,$id);
+    }
+
+    #[Route('/downloadPDF/{reference}/{height}/{width}/{perRow}', name: 'downloadBar', methods: ['GET'])]
+    public function generateBarPdf(EntityManagerInterface $entityManager,Barcode $bar, LoggerInterface $log,string $reference,downloadPdf $dwPdf,int $height,int $width,int $perRow): Response
+    {
+      return $dwPdf->generateBarPdf($entityManager,$bar,$reference,$height,$width,$perRow);
     }
 
 }

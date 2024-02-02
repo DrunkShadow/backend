@@ -60,7 +60,7 @@ class ModelController extends AbstractController
 
 
     #[Route('/{modelId}', name: 'DeleteModel', methods: ['DELETE'],)]
-    public function DeleteModel(EntityManagerInterface $entityManager, Request $request, string $modelId): Response
+    public function DeleteModel(EntityManagerInterface $entityManager, string $modelId): Response
     {
         $model = $entityManager->getRepository(Models::class)->find($modelId);
 
